@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.agileboot.domain.cos.media.db.mapper.MediaMapper">
+
+    <insert id="saveBatch">
+        INSERT INTO t_cos_media (img_url, group_id)
+        VALUES
+        <foreach collection="list" item="item" index="index" separator=",">
+            (#{item.imgUrl}, #{item.groupId})
+        </foreach>
+    </insert>
+</mapper>

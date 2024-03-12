@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.agileboot.domain.cos.group.db.mapper.GroupTagMapper">
+
+    <select id="selectAllTagById" resultType="com.agileboot.domain.cos.tag.db.entity.CosTag">
+        select * from t_cos_tag
+        where id in (select a.tag_id from t_group_tag a where group_id = #{group_id})
+    </select>
+
+</mapper>
