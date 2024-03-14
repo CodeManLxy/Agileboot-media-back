@@ -46,6 +46,7 @@ public class CosGroup implements Serializable {
 
 
 
+    @TableField("backgroud_img")
     private String backgroundImg;
 
 

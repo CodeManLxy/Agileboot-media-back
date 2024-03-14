@@ -1,7 +1,9 @@
 package com.agileboot.domain.cos.group.db.service;
 
+import com.agileboot.common.core.page.PageDTO;
 import com.agileboot.domain.cos.group.db.entity.CosGroup;
 import com.agileboot.domain.cos.group.db.entity.GroupTag;
+import com.agileboot.domain.cos.group.query.GroupQuery;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -12,12 +14,10 @@ import org.springframework.web.multipart.MultipartFile;
 public interface GroupService {
     /**
      * 查询
-     * @param groupName
-     * @param pageNum
-     * @param pageSize
+     * @param query
      * @return
      */
-    IPage<CosGroup> list(String groupName, Integer pageNum, Integer pageSize);
+    PageDTO<CosGroup> list(GroupQuery query);
 
     /**
      * 新增组

@@ -5,7 +5,9 @@ import com.agileboot.common.core.dto.ResponseDTO;
 import com.agileboot.domain.cos.group.GroupApplicationService;
 import com.agileboot.domain.cos.group.command.AddGroupCommand;
 import com.agileboot.domain.cos.group.db.entity.CosGroup;
+import com.agileboot.domain.cos.group.query.GroupQuery;
 import com.agileboot.domain.cos.media.MediaApplicationService;
+import com.agileboot.domain.system.notice.query.NoticeQuery;
 import io.swagger.v3.oas.annotations.Operation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -27,17 +29,15 @@ public class GroupController extends BaseController {
     /**
      * 组列表查询
      *
-     * @param groupName
+     * @param query
      * @return
      */
     @Operation(summary = "组列表查询")
     @PreAuthorize("@permission.has('system:cosgroup:list')")
     @RequestMapping(value = "/group/list", method = RequestMethod.GET)
-    public ResponseDTO list(@RequestParam(name = "group_name", required = false) String groupName,
-                            @RequestParam(defaultValue = "1", required = false) Integer pageNum,
-                            @RequestParam(defaultValue = "20", required = false) Integer pageSize
+    public ResponseDTO list(GroupQuery query
     ) {
-        return ResponseDTO.ok(groupService.list(groupName, pageNum, pageSize));
+        return ResponseDTO.ok(groupService.list(query));
     }
 
 

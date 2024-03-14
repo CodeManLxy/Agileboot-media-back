@@ -1,11 +1,13 @@
 package com.agileboot.domain.cos.group;
 
+import com.agileboot.common.core.page.PageDTO;
 import com.agileboot.domain.cos.group.command.AddGroupCommand;
 import com.agileboot.domain.cos.group.command.AddNewTagCommand;
 import com.agileboot.domain.cos.group.db.entity.CosGroup;
 import com.agileboot.domain.cos.group.db.service.GroupService;
 import com.agileboot.domain.cos.group.model.GroupModel;
 import com.agileboot.domain.cos.group.model.GroupModelFactory;
+import com.agileboot.domain.cos.group.query.GroupQuery;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -27,8 +29,8 @@ public class GroupApplicationService {
     @Resource
     private GroupModelFactory groupModelFactory;
 
-    public IPage<CosGroup> list(String groupName, Integer pageNum, Integer pageSize) {
-        return mediaService.list(groupName, pageNum, pageSize);
+    public PageDTO<CosGroup> list(GroupQuery query) {
+        return mediaService.list(query);
     }
 
     public Integer init(AddGroupCommand info) {

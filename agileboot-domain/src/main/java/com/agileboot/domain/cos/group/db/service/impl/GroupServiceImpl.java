@@ -1,5 +1,6 @@
 package com.agileboot.domain.cos.group.db.service.impl;
 
+import com.agileboot.common.core.page.PageDTO;
 import com.agileboot.common.exception.ApiException;
 import com.agileboot.common.exception.error.ErrorCode;
 import com.agileboot.domain.cos.group.db.entity.CosGroup;
@@ -7,6 +8,7 @@ import com.agileboot.domain.cos.group.db.entity.GroupTag;
 import com.agileboot.domain.cos.group.db.mapper.GroupMapper;
 import com.agileboot.domain.cos.group.db.mapper.GroupTagMapper;
 import com.agileboot.domain.cos.group.db.service.GroupService;
+import com.agileboot.domain.cos.group.query.GroupQuery;
 import com.agileboot.domain.cos.tag.db.entity.CosTag;
 import com.agileboot.infrastructure.config.minio.bean.MinIoResponse;
 import com.agileboot.infrastructure.config.minio.conf.MinioConf;
@@ -45,18 +47,16 @@ public class GroupServiceImpl implements GroupService {
 
 
     @Override
-    public IPage<CosGroup> list(String groupName, Integer pageNum, Integer pageSize) {
-        IPage<CosGroup> page = new Page<>(pageNum, pageSize);
-        QueryWrapper<CosGroup> queryWrapper = new QueryWrapper<>();
-        queryWrapper.like(StringUtils.isNotEmpty(groupName), "group_name", groupName);
-        IPage<CosGroup> list = groupMapper.selectPage(page, queryWrapper);
+    public PageDTO<CosGroup> list(GroupQuery query) {
+        IPage<CosGroup> list = groupMapper.selectPage(query.toPage(), query.addQueryCondition());
         List<CosGroup> records = list.getRecords();
         for (CosGroup record : records) {
             List<CosTag> tagList = groupTagMapper.selectAllTagById(record.getId());
             record.setTagList(tagList);
             //判断是否需要会员 ||  用户是否付费
         }
-        return list;
+
+        return new PageDTO<>(list.getRecords(), list.getTotal());
     }
 
     @Override
